@@ -6,6 +6,8 @@ import { exitClub, joinClub } from "./routes/clubs/ClubInteraction";
 import createClub from "./routes/clubs/CreateClub";
 import getClubDetails from "./routes/clubs/GetClubDetails";
 import updateClub from "./routes/clubs/UpdateClub";
+import getComments from "./routes/comments/GetComments";
+import postComment from "./routes/comments/PostComment";
 import createPost from "./routes/posts/CreatePost";
 import getAllPosts from "./routes/posts/GetAllPosts";
 import getClubPosts from "./routes/posts/GetClubPosts";
@@ -44,5 +46,9 @@ routes.use("/update-club", updateClub);
 // users
 routes.use("/user-details", getUserDetails); // GET ?username=louis
 routes.use("/update-user", updateUser);
+
+// comments
+routes.use("/post-comment", postComment);
+routes.use("/get-comments", getComments);
 
 export default routes;

@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Ec-Static is a discussion forum. You can create clubs and create posts under those clubs and have real interaction with other people who have similar interset.
+Ec-Static is a discussion forum. You can create clubs and create posts under those clubs and have real interaction with other people who have similar interest.
 
 ### Running Locally
 
@@ -41,27 +41,29 @@ MAILGUN_API="<your-mailgun-api-key>"
 - Some of this routes needs token to authorize, for those add `x-auth-token` in header of the request
 - To test these routes in postman add `Origin=http://localhost:3000` in header of the request
 
-| HTTP Verbs | Endpoints                  | Action                                   | Url Parameters         | Request Body                                                          | Token Required |
-| ---------- | -------------------------- | ---------------------------------------- | ---------------------- | --------------------------------------------------------------------- | -------------- |
-| GET        | /api/user-details          | Get details of a particular user         | username               | -                                                                     | NO             |
-| POST       | /api/update-user           | Update information of user               | -                      | name, profile_picture, cover_photo, bio                               | YES            |
-| POST       | /api/create-club           | To create a new club                     | -                      | name, club_id, description                                            | YES            |
-| POST       | /api/join-club             | To join a club                           | -                      | club_id                                                               | YES            |
-| POST       | /api/update-club           | To update existing club info             | -                      | name, description, club_id, club_profile_picture, club_banner_picture | YES            |
-| POST       | /api/exit-club             | To exit a club                           | -                      | club_id                                                               | YES            |
-| GET        | /api/club-details          | To get club details                      | -                      | club_id                                                               | NO             |
-| POST       | /api/create-post           | To create a new post                     | -                      | club_id, post_title, post_content, post_image                         | YES            |
-| POST       | /api/upvote                | To upvote a particular post              | -                      | post_id                                                               | YES            |
-| POST       | /api/downvote              | To downvote a particular post            | -                      | post_id                                                               | YES            |
-| GET        | /api/get-joined-club-posts | To get all the posts where user joined   | page, perPage          | -                                                                     | YES            |
-| GET        | /api/get-all-posts         | To get all the posts from all the clubs  | page, perPage          | -                                                                     | NO             |
-| GET        | /api/get-club-posts        | To get all the posts under a club        | club_id, page, perPage | -                                                                     | NO             |
-| GET        | /api/get-user-posts        | To get all the posts which a user posted | user_id, page, perPage | -                                                                     | NO             |
-| GET        | /api/get-post              | To get a particular post                 | post_id                | -                                                                     | NO             |
-| POST       | /api/login                 | To login a user                          | -                      | username, password                                                    | NO             |
-| POST       | /api/forgot-password       | To get a reset token in the mail         | -                      | email                                                                 | NO             |
-| POST       | /api/reset-password/:token | To reset the password                    | :token                 | newPassword                                                           | NO             |
-| POST       | /api/register              | To sign up a new user                    | -                      | name, email, username, password                                       | NO             |
+| HTTP Verbs | Endpoints                  | Action                                            | Url Parameters         | Request Body                                                          | Token Required |
+| ---------- | -------------------------- | ------------------------------------------------- | ---------------------- | --------------------------------------------------------------------- | -------------- |
+| GET        | /api/user-details          | Get details of a particular user                  | username               | -                                                                     | NO             |
+| POST       | /api/update-user           | Update information of user                        | -                      | name, profile_picture, cover_photo, bio                               | YES            |
+| POST       | /api/create-club           | To create a new club                              | -                      | name, club_id, description                                            | YES            |
+| POST       | /api/join-club             | To join a club                                    | -                      | club_id                                                               | YES            |
+| POST       | /api/update-club           | To update existing club info                      | -                      | name, description, club_id, club_profile_picture, club_banner_picture | YES            |
+| POST       | /api/exit-club             | To exit a club                                    | -                      | club_id                                                               | YES            |
+| GET        | /api/club-details          | To get club details                               | -                      | club_id                                                               | NO             |
+| POST       | /api/create-post           | To create a new post                              | -                      | club_id, post_title, post_content, post_image                         | YES            |
+| POST       | /api/upvote                | To upvote a particular post                       | -                      | post_id                                                               | YES            |
+| POST       | /api/downvote              | To downvote a particular post                     | -                      | post_id                                                               | YES            |
+| GET        | /api/get-joined-club-posts | To get all the posts where user joined            | page, perPage          | -                                                                     | YES            |
+| GET        | /api/get-all-posts         | To get all the posts from all the clubs           | page, perPage          | -                                                                     | NO             |
+| GET        | /api/get-club-posts        | To get all the posts under a club                 | club_id, page, perPage | -                                                                     | NO             |
+| GET        | /api/get-user-posts        | To get all the posts which a user posted          | user_id, page, perPage | -                                                                     | NO             |
+| GET        | /api/get-post              | To get a particular post                          | post_id                | -                                                                     | NO             |
+| POST       | /api/login                 | To login a user                                   | -                      | username, password                                                    | NO             |
+| POST       | /api/forgot-password       | To get a reset token in the mail                  | -                      | email                                                                 | NO             |
+| POST       | /api/reset-password/:token | To reset the password                             | :token                 | newPassword                                                           | NO             |
+| POST       | /api/register              | To sign up a new user                             | -                      | name, email, username, password                                       | NO             |
+| POST       | /api/post-comment          | To post a comment under a post or another comment | -                      | post_id, comment_id, content                                          | YES            |
+| GET        | /api/get-comments          | To get all the comments under a post              | post_id, page, perPage | -                                                                     | NO             |
 
 ### Contribution
 

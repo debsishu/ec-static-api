@@ -1,18 +1,22 @@
 import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
-  user_id: {
+  author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
   },
-  post_id: {
+  parent_post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
     required: true,
   },
+  parent_comment: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment",
+  },
   content: { type: String, required: true },
-  timestamp: { type: Date, default: Date.now },
+  created_at: { type: Date, default: Date.now },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);
