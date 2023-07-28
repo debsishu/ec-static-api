@@ -17,8 +17,8 @@ const PostSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   upvote_count: { type: Number, default: 0 },
   downvote_count: { type: Number, default: 0 },
-  upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Upvotes" }],
-  downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Downvotes" }],
+  upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 const Post = mongoose.model("Post", PostSchema);

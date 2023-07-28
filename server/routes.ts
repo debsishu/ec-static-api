@@ -9,7 +9,10 @@ import updateClub from "./routes/clubs/UpdateClub";
 import createPost from "./routes/posts/CreatePost";
 import getAllPosts from "./routes/posts/GetAllPosts";
 import getClubPosts from "./routes/posts/GetClubPosts";
+import getJoinedClubPosts from "./routes/posts/GetJoinedClubPosts";
 import getPost from "./routes/posts/GetPost";
+import getUserPosts from "./routes/posts/GetUserPosts";
+import { downvotePost, upvotePost } from "./routes/posts/VotePosts";
 import getUserDetails from "./routes/user/GetUserDetails";
 import updateUser from "./routes/user/UpdateUser";
 
@@ -26,6 +29,10 @@ routes.use("/create-post", createPost);
 routes.use("/get-all-posts", getAllPosts); // GET ?page=1&perPage=10
 routes.use("/get-post", getPost); // GET ?post_id=1231242342
 routes.use("/get-club-posts", getClubPosts); // GET ?page=1&perPage=10&club_id=1234839392829
+routes.use("/get-user-posts", getUserPosts); // GET ?user_id=12341234234
+routes.use("/get-joined-club-posts", getJoinedClubPosts); // GET ?page=1&perPage=10 (token-required)
+routes.use("/upvote", upvotePost);
+routes.use("/downvote", downvotePost);
 
 // clubs
 routes.use("/create-club", createClub);

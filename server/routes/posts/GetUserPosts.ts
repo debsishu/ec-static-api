@@ -1,21 +1,19 @@
 import express, { Request, Response, Router } from "express";
+import { CastError } from "mongoose";
 import { MissingInformationError, ResponseError } from "../../types/Error";
 import Post from "../../models/Post";
-import { CastError } from "mongoose";
 
-const getClubPosts: Router = express.Router();
+const getUserPosts: Router = express.Router();
 
-getClubPosts.get("/", async (req: Request, res: Response) => {
-  const { club_id } = req.query;
+getUserPosts.get("/", async (req: Request, res: Response) => {
+  const { user_id } = req.query;
   const perPage: number = parseInt(req.query.perPage as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;
 
   try {
-    if (!club_id) {
-      throw new MissingInformationError("No club id provided");
-    }
+    if (!user_id) throw new MissingInformationError("No user id provided");
 
-    const clubPosts = await Post.find({ club_id: club_id })
+    const userPosts = await Post.find({ user_id })
       .populate([
         {
           path: "user_id",
@@ -29,15 +27,15 @@ getClubPosts.get("/", async (req: Request, res: Response) => {
       .skip((page - 1) * perPage)
       .limit(perPage);
 
-    if (!clubPosts || clubPosts.length === 0) {
+    if (!userPosts || userPosts.length == 0) {
       throw new ResponseError(
         "no-post-found",
-        "No post found under this club",
+        "No post found under this user",
         404
       );
     }
 
-    return res.status(200).json(clubPosts);
+    return res.status(200).json(userPosts);
   } catch (err) {
     if (err instanceof ResponseError) {
       return res.status(err.statusCode).json({
@@ -47,7 +45,7 @@ getClubPosts.get("/", async (req: Request, res: Response) => {
     } else if (err as CastError) {
       return res.status(404).json({
         status: "invalid-object-id",
-        message: "Post Id is not valid",
+        message: "User Id is not valid",
       });
     } else {
       return res.status(404).json({ message: "Something went wrong" });
@@ -55,4 +53,4 @@ getClubPosts.get("/", async (req: Request, res: Response) => {
   }
 });
 
-export default getClubPosts;
+export default getUserPosts;
