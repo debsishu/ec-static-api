@@ -7,6 +7,7 @@ const getAllPosts: Router = express.Router();
 getAllPosts.get("/", async (req: Request, res: Response) => {
   const perPage: number = parseInt(req.query.perPage as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;
+  const skipAmount = (page - 1) * perPage;
 
   try {
     const posts = await Post.find()
@@ -20,13 +21,22 @@ getAllPosts.get("/", async (req: Request, res: Response) => {
           select: "club_id",
         },
       ])
-      .skip((page - 1) * perPage)
+      .skip(skipAmount)
       .limit(perPage);
+
+    const totalCount = await Post.countDocuments();
+
+    const paginationInfo = {
+      page,
+      perPage,
+      hasNextPage: totalCount > skipAmount + perPage,
+    };
 
     if (!posts) {
       throw new ResponseError("no-post-found", "No post found", 400);
     }
-    return res.status(200).json(posts);
+
+    return res.status(200).json({ posts, paginationInfo });
   } catch (err) {
     if (err instanceof ResponseError) {
       return res.status(err.statusCode).json({
