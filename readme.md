@@ -64,6 +64,8 @@ MAILGUN_API="<your-mailgun-api-key>"
 | POST       | /api/register              | To sign up a new user                             | -                      | name, email, username, password                                       | NO             |
 | POST       | /api/post-comment          | To post a comment under a post or another comment | -                      | post_id, comment_id, content                                          | YES            |
 | GET        | /api/get-comments          | To get all the comments under a post              | post_id, page, perPage | -                                                                     | NO             |
+| GET        | /api/get-popular-clubs     | To get the popular clubs with default count of 5  | count                  | -                                                                     | NO             |
+| GET        | /api/get-joined-clubs      | To get all the clubs where user joined            | -                      | -                                                                     | YES            |
 
 ### Contribution
 

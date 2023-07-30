@@ -12,9 +12,11 @@ import createPost from "./routes/posts/CreatePost";
 import getAllPosts from "./routes/posts/GetAllPosts";
 import getClubPosts from "./routes/posts/GetClubPosts";
 import getJoinedClubPosts from "./routes/posts/GetJoinedClubPosts";
+import getPopularClubs from "./routes/posts/GetPopularClubs";
 import getPost from "./routes/posts/GetPost";
 import getUserPosts from "./routes/posts/GetUserPosts";
 import { downvotePost, upvotePost } from "./routes/posts/VotePosts";
+import getJoinedClubs from "./routes/user/GetJoinedClubs";
 import getUserDetails from "./routes/user/GetUserDetails";
 import updateUser from "./routes/user/UpdateUser";
 
@@ -42,10 +44,12 @@ routes.use("/club-details", getClubDetails); // GET ?club_id=programming
 routes.use("/join-club", joinClub);
 routes.use("/exit-club", exitClub);
 routes.use("/update-club", updateClub);
+routes.use("/get-popular-clubs", getPopularClubs); // GET ?count=5
 
 // users
 routes.use("/user-details", getUserDetails); // GET ?username=louis
 routes.use("/update-user", updateUser);
+routes.use("/get-joined-clubs", getJoinedClubs); // GET
 
 // comments
 routes.use("/post-comment", postComment);
