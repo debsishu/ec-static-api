@@ -16,6 +16,8 @@ import getPopularClubs from "./routes/posts/GetPopularClubs";
 import getPost from "./routes/posts/GetPost";
 import getUserPosts from "./routes/posts/GetUserPosts";
 import { downvotePost, upvotePost } from "./routes/posts/VotePosts";
+import searchClubs from "./routes/search/SearchClubs";
+import searchPost from "./routes/search/SearchPost";
 import getJoinedClubs from "./routes/user/GetJoinedClubs";
 import getUserDetails from "./routes/user/GetUserDetails";
 import updateUser from "./routes/user/UpdateUser";
@@ -54,5 +56,9 @@ routes.use("/get-joined-clubs", getJoinedClubs); // GET
 // comments
 routes.use("/post-comment", postComment);
 routes.use("/get-comments", getComments);
+
+// search
+routes.use("/search-posts", searchPost);
+routes.use("/search-clubs", searchClubs);
 
 export default routes;
