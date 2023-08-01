@@ -4,7 +4,7 @@ import { ResponseError } from "../../types/Error";
 
 const getAllPosts: Router = express.Router();
 
-getAllPosts.get("/", async (req: Request, res: Response) => {
+getAllPosts.get("/posts", async (req: Request, res: Response) => {
   const perPage: number = parseInt(req.query.perPage as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;
   const skipAmount = (page - 1) * perPage;

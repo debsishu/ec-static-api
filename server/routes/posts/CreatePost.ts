@@ -6,7 +6,7 @@ import Club from "../../models/Club";
 
 const createPost: Router = express.Router();
 
-createPost.post("/", verifyToken, async (req: Request, res: Response) => {
+createPost.post("/posts", verifyToken, async (req: Request, res: Response) => {
   const { club_id, post_title, post_content, post_image } = req.body;
   try {
     const userInfo = req.body.user_data;

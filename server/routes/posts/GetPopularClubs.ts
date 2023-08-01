@@ -4,7 +4,7 @@ import Club from "../../models/Club";
 
 const getPopularClubs: Router = express.Router();
 
-getPopularClubs.get("/", async (req: Request, res: Response) => {
+getPopularClubs.get("/clubs/popular", async (req: Request, res: Response) => {
   const count: number = parseInt(req.query.count as string) || 5;
 
   try {

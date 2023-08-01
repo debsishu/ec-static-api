@@ -25,40 +25,40 @@ import updateUser from "./routes/user/UpdateUser";
 const routes: Router = express.Router();
 
 // auth
-routes.use("/register", register);
-routes.use("/login", login);
-routes.use("/forgot-password", forgetPassword);
-routes.use("/reset-password", resetPassword); // reset-password/:token
+routes.use("/", register); // POST api/register
+routes.use("/", login); // POST api/login
+routes.use("/", forgetPassword); // POST api/forgot-password
+routes.use("/", resetPassword); // POST api/reset-password/:token
 
 // posts
-routes.use("/create-post", createPost);
-routes.use("/get-all-posts", getAllPosts); // GET ?page=1&perPage=10
-routes.use("/get-post", getPost); // GET ?post_id=1231242342
-routes.use("/get-club-posts", getClubPosts); // GET ?page=1&perPage=10&club_id=1234839392829
-routes.use("/get-user-posts", getUserPosts); // GET ?user_id=12341234234
-routes.use("/get-joined-club-posts", getJoinedClubPosts); // GET ?page=1&perPage=10 (token-required)
-routes.use("/upvote", upvotePost);
-routes.use("/downvote", downvotePost);
+routes.use("/", createPost); // POST api/posts (token-required)
+routes.use("/", getJoinedClubPosts); // GET api/posts/joined-clubs?page=1&perPage=10 (token-required)
+routes.use("/", getClubPosts); // GET api/posts/club/:club_id?page=1&perPage=10
+routes.use("/", getUserPosts); // GET api/posts/user/:user_id
+routes.use("/", upvotePost); // POST api/posts/:post_id/upvote (token-required)
+routes.use("/", downvotePost); // POST api/posts/:post_id/downvote (token-required)
+routes.use("/", getAllPosts); // GET api/posts?page=1&perPage=10
+routes.use("/", getPost); // GET api/posts/:post_id
 
 // clubs
-routes.use("/create-club", createClub);
-routes.use("/club-details", getClubDetails); // GET ?club_id=programming
-routes.use("/join-club", joinClub);
-routes.use("/exit-club", exitClub);
-routes.use("/update-club", updateClub);
-routes.use("/get-popular-clubs", getPopularClubs); // GET ?count=5
+routes.use("/", joinClub); // POST api/clubs/:club_id/join (token-required)
+routes.use("/", exitClub); // POST api/clubs/:club_id/exit (token-required)
+routes.use("/", updateClub); // POST api/clubs/:club_id/update (token-required)
+routes.use("/", getPopularClubs); // GET api/clubs/popular?count=5
+routes.use("/", getClubDetails); // GET api/clubs/:club_id
+routes.use("/", createClub); // POST api/clubs (token-required)
 
 // users
-routes.use("/user-details", getUserDetails); // GET ?username=louis
-routes.use("/update-user", updateUser);
-routes.use("/get-joined-clubs", getJoinedClubs); // GET
+routes.use("/", updateUser); // POST api/users/update (token-required)
+routes.use("/", getJoinedClubs); // GET api/users/joined-clubs (token-required)
+routes.use("/", getUserDetails); // GET api/users/:username
 
 // comments
-routes.use("/post-comment", postComment);
-routes.use("/get-comments", getComments);
+routes.use("/", postComment); // POST api/comments/:post_id (token-required)
+routes.use("/", getComments); // GET api/comments/:post_id?page=1&perPage=10
 
 // search
-routes.use("/search-posts", searchPost);
-routes.use("/search-clubs", searchClubs);
+routes.use("/", searchPost); // GET api/search/posts?searchQuery=hi there
+routes.use("/", searchClubs); // GET api/search/clubs?searchQuery=hi there
 
 export default routes;

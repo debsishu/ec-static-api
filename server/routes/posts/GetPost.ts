@@ -5,8 +5,8 @@ import { MissingInformationError, ResponseError } from "../../types/Error";
 
 const getPost: Router = express.Router();
 
-getPost.get("/", async (req: Request, res: Response) => {
-  const { post_id } = req.query;
+getPost.get("/posts/:post_id", async (req: Request, res: Response) => {
+  const { post_id } = req.params;
   try {
     if (!post_id) throw new MissingInformationError("Post Id not provided");
 

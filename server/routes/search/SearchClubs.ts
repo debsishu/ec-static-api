@@ -4,7 +4,7 @@ import { MissingInformationError, ResponseError } from "../../types/Error";
 
 const searchClubs: Router = express.Router();
 
-searchClubs.get("/", async (req: Request, res: Response) => {
+searchClubs.get("/search/clubs", async (req: Request, res: Response) => {
   const { searchQuery } = req.query;
   const perPage: number = parseInt(req.query.perPage as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;

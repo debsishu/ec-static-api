@@ -5,8 +5,8 @@ import Comment from "../../models/Comment";
 
 const getComments: Router = express.Router();
 
-getComments.get("/", async (req: Request, res: Response) => {
-  const { post_id } = req.query;
+getComments.get("/comments/:post_id", async (req: Request, res: Response) => {
+  const { post_id } = req.params;
   const perPage: number = parseInt(req.query.perPage as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;
   const skipAmount = (page - 1) * perPage;

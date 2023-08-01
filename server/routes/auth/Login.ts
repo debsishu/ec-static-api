@@ -10,7 +10,7 @@ dotenv.config();
 const login: Router = express.Router();
 const JWT_SECRET = process.env.JWTSECRET!;
 
-login.post("/", async (req: Request, res: Response) => {
+login.post("/login", async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
     if (!username || !password) {

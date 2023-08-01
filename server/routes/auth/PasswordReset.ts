@@ -22,7 +22,7 @@ const mg = mailgun.client({
   key: MAILGUN_API,
 });
 
-forgetPassword.post("/", async (req: Request, res: Response) => {
+forgetPassword.post("/forgot-password", async (req: Request, res: Response) => {
   const { email } = req.body;
 
   try {
@@ -74,57 +74,60 @@ forgetPassword.post("/", async (req: Request, res: Response) => {
   }
 });
 
-resetPassword.post("/:token", async (req: Request, res: Response) => {
-  const { token } = req.params;
-  const { newPassword } = req.body;
+resetPassword.post(
+  "/reset-password/:token",
+  async (req: Request, res: Response) => {
+    const { token } = req.params;
+    const { newPassword } = req.body;
 
-  try {
-    if (!token || !newPassword) {
-      throw new MissingInformationError();
-    }
+    try {
+      if (!token || !newPassword) {
+        throw new MissingInformationError();
+      }
 
-    const user = await User.findOne({
-      reset_token: token,
-      reset_token_expiry: { $gt: Date.now() },
-    });
+      const user = await User.findOne({
+        reset_token: token,
+        reset_token_expiry: { $gt: Date.now() },
+      });
 
-    if (!user) {
-      throw new ResponseError(
-        "invalid-token",
-        "Token maybe invalid or expired",
-        401
+      if (!user) {
+        throw new ResponseError(
+          "invalid-token",
+          "Token maybe invalid or expired",
+          401
+        );
+      }
+
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+      user.reset_token = undefined;
+      user.reset_token_expiry = undefined;
+      await user.save();
+
+      const newToken = jwt.sign(
+        { username: user.username, id: user._id },
+        JWT_SECRET
       );
-    }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    user.reset_token = undefined;
-    user.reset_token_expiry = undefined;
-    await user.save();
-
-    const newToken = jwt.sign(
-      { username: user.username, id: user._id },
-      JWT_SECRET
-    );
-
-    return res.status(200).json({
-      id: user._id,
-      name: user.name,
-      username: user.username,
-      profile_picture: user.profile_picture,
-      cover_photo: user.cover_photo,
-      token: newToken,
-    });
-  } catch (err) {
-    if (err instanceof ResponseError) {
-      return res.status(err.statusCode).json({
-        status: err.status,
-        message: err.message,
+      return res.status(200).json({
+        id: user._id,
+        name: user.name,
+        username: user.username,
+        profile_picture: user.profile_picture,
+        cover_photo: user.cover_photo,
+        token: newToken,
       });
-    } else {
-      return res.status(404).json({
-        message: "Something went wrong",
-      });
+    } catch (err) {
+      if (err instanceof ResponseError) {
+        return res.status(err.statusCode).json({
+          status: err.status,
+          message: err.message,
+        });
+      } else {
+        return res.status(404).json({
+          message: "Something went wrong",
+        });
+      }
     }
   }
-});
+);

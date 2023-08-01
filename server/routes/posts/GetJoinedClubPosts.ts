@@ -7,7 +7,7 @@ import { ResponseError } from "../../types/Error";
 const getJoinedClubPosts: Router = express.Router();
 
 getJoinedClubPosts.get(
-  "/",
+  "/posts/joined-clubs/",
   verifyToken,
   async (req: Request, res: Response) => {
     const userInfo = req.body.user_data;

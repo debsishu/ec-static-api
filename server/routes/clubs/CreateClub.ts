@@ -6,7 +6,7 @@ import User from "../../models/User";
 
 const createClub: Router = express.Router();
 
-createClub.post("/", verifyToken, async (req: Request, res: Response) => {
+createClub.post("/clubs", verifyToken, async (req: Request, res: Response) => {
   const { name, club_id, description } = req.body;
   try {
     const userInfo = req.body.user_data;

@@ -12,7 +12,7 @@ dotenv.config();
 const JWT_SECRET = process.env.JWTSECRET!;
 const register: Router = express.Router();
 
-register.post("/", async (req: Request, res: Response) => {
+register.post("/register", async (req: Request, res: Response) => {
   const { name, email, username, password } = req.body;
   try {
     validateFields(name, email, username, password);

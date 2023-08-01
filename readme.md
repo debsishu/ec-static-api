@@ -1,8 +1,8 @@
-# Installation and Usage
+## Installation and Usage
 
 ### Introduction
 
-Ec-Static is a discussion forum. You can create clubs and create posts under those clubs and have real interaction with other people who have similar interest.
+Ec-Static is a discussion forum. You can create clubs and create posts under those clubs and have real interaction with other people who have similar interests.
 
 ### Running Locally
 
@@ -25,49 +25,50 @@ Ec-Static is a discussion forum. You can create clubs and create posts under tho
 
 Example:
 
-```
+```plaintext
 WHITELIST=["http://localhost:3000", "allowed-hosts..."]
 JWTSECRET="474ae68490d3e1612043f0cf53aae4d60e44c77d883f42ba32c2836a95a73527"
 DBLINK="<your-mongodb-connection-link>"
 FRONTEND_HOST="http://localhost:3000"
 MAILGUN_API="<your-mailgun-api-key>"
-
 ```
 
 ### Routes
 
 - Run `npm run dev` to start the development server.
 - The default port is 6969, the server will start at `http://localhost:6969/`
-- Some of this routes needs token to authorize, for those add `x-auth-token` in header of the request
+- Some of these routes need tokens to authorize, for those, add `x-auth-token` in the header of the request.
 - To test these routes in postman add `Origin=http://localhost:3000` in header of the request
 
-| HTTP Verbs | Endpoints                  | Action                                            | Url Parameters         | Request Body                                                          | Token Required |
-| ---------- | -------------------------- | ------------------------------------------------- | ---------------------- | --------------------------------------------------------------------- | -------------- |
-| GET        | /api/user-details          | Get details of a particular user                  | username               | -                                                                     | NO             |
-| POST       | /api/update-user           | Update information of user                        | -                      | name, profile_picture, cover_photo, bio                               | YES            |
-| POST       | /api/create-club           | To create a new club                              | -                      | name, club_id, description                                            | YES            |
-| POST       | /api/join-club             | To join a club                                    | -                      | club_id                                                               | YES            |
-| POST       | /api/update-club           | To update existing club info                      | -                      | name, description, club_id, club_profile_picture, club_banner_picture | YES            |
-| POST       | /api/exit-club             | To exit a club                                    | -                      | club_id                                                               | YES            |
-| GET        | /api/club-details          | To get club details                               | -                      | club_id                                                               | NO             |
-| POST       | /api/create-post           | To create a new post                              | -                      | club_id, post_title, post_content, post_image                         | YES            |
-| POST       | /api/upvote                | To upvote a particular post                       | -                      | post_id                                                               | YES            |
-| POST       | /api/downvote              | To downvote a particular post                     | -                      | post_id                                                               | YES            |
-| GET        | /api/get-joined-club-posts | To get all the posts where user joined            | page, perPage          | -                                                                     | YES            |
-| GET        | /api/get-all-posts         | To get all the posts from all the clubs           | page, perPage          | -                                                                     | NO             |
-| GET        | /api/get-club-posts        | To get all the posts under a club                 | club_id, page, perPage | -                                                                     | NO             |
-| GET        | /api/get-user-posts        | To get all the posts which a user posted          | user_id, page, perPage | -                                                                     | NO             |
-| GET        | /api/get-post              | To get a particular post                          | post_id                | -                                                                     | NO             |
-| POST       | /api/login                 | To login a user                                   | -                      | username, password                                                    | NO             |
-| POST       | /api/forgot-password       | To get a reset token in the mail                  | -                      | email                                                                 | NO             |
-| POST       | /api/reset-password/:token | To reset the password                             | :token                 | newPassword                                                           | NO             |
-| POST       | /api/register              | To sign up a new user                             | -                      | name, email, username, password                                       | NO             |
-| POST       | /api/post-comment          | To post a comment under a post or another comment | -                      | post_id, comment_id, content                                          | YES            |
-| GET        | /api/get-comments          | To get all the comments under a post              | post_id, page, perPage | -                                                                     | NO             |
-| GET        | /api/get-popular-clubs     | To get the popular clubs with default count of 5  | count                  | -                                                                     | NO             |
-| GET        | /api/get-joined-clubs      | To get all the clubs where user joined            | -                      | -                                                                     | YES            |
+| HTTP Verbs | Endpoints                    | Action                                               | Url Parameters             | Request Body                                                 | Token Required |
+| ---------- | ---------------------------- | ---------------------------------------------------- | -------------------------- | ------------------------------------------------------------ | -------------- |
+| GET        | /api/users/:username         | Get details of a particular user                     | \-                         | \-                                                           | NO             |
+| POST       | /api/users/update            | Update information of user                           | \-                         | name, profile_picture, cover_photo, bio                      | YES            |
+| POST       | /api/clubs                   | To create a new club                                 | \-                         | name, club_id, description                                   | YES            |
+| POST       | /api/clubs/:club_id/join     | To join a club                                       | \-                         | \-                                                           | YES            |
+| POST       | /api/clubs/:club_id/update   | To update existing club info                         | \-                         | name, description, club_profile_picture, club_banner_picture | YES            |
+| POST       | /api/clubs/:club_id/exit     | To exit a club                                       | \-                         | \-                                                           | YES            |
+| GET        | /api/clubs/:club_id          | To get club details                                  | \-                         | \-                                                           | NO             |
+| POST       | /api/posts                   | To create a new post                                 | \-                         | club_id, post_title, post_content, post_image                | YES            |
+| POST       | /api/posts/:post_id/upvote   | To upvote a particular post                          | \-                         | \-                                                           | YES            |
+| POST       | /api/posts/:post_id/downvote | To downvote a particular post                        | \-                         | \-                                                           | YES            |
+| GET        | /api/posts/joined-clubs      | To get all the posts where user joined               | page, perPage              | \-                                                           | YES            |
+| GET        | /api/posts                   | To get all the posts from all the clubs              | page, perPage              | \-                                                           | NO             |
+| GET        | /api/posts/club/:club_id     | To get all the posts in a club                       | page, perPage              | \-                                                           | NO             |
+| GET        | /api/posts/user/:user_id     | To get all the posts which a user posted             | page, perPage              | \-                                                           | NO             |
+| GET        | /api/posts/:post_id          | To get a particular post                             | \-                         | \-                                                           | NO             |
+| POST       | /api/login                   | To login a user                                      | \-                         | username, password                                           | NO             |
+| POST       | /api/forgot-password         | To get a reset token in the mail                     | \-                         | email                                                        | NO             |
+| POST       | /api/reset-password/:token   | To reset the password                                | :token                     | newPassword                                                  | NO             |
+| POST       | /api/register                | To sign up a new user                                | \-                         | name, email, username, password                              | NO             |
+| POST       | /api/comments/:post_id       | To post a comment under a post or another comment    | \-                         | comment_id?, content                                         | YES            |
+| GET        | /api/comments/:post_id       | To get all the comments under a post                 | page, perPage              | \-                                                           | NO             |
+| GET        | /api/clubs/popular           | To get the popular clubs with default count of 5     | count                      | \-                                                           | NO             |
+| GET        | /api/users/joined-clubs      | To get all the clubs where user joined               | \-                         | \-                                                           | YES            |
+| GET        | /api/search/posts            | To search from all the posts post title and content  | searchQuery, page, perPage | \-                                                           | NO             |
+| GET        | /api/search/clubs            | To search from all the clubs club_id and description | searchQuery, page, perPage | \-                                                           | NO             |
 
 ### Contribution
 
-- Fell free to contribute to this project.
+- Feel free to contribute to this project.
 - Fork the repository and make changes and open pull request.

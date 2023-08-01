@@ -4,8 +4,8 @@ import { MissingInformationError, ResponseError } from "../../types/Error";
 
 const getClubDetails: Router = express.Router();
 
-getClubDetails.get("/", async (req: Request, res: Response) => {
-  const { club_id } = req.query;
+getClubDetails.get("/clubs/:club_id", async (req: Request, res: Response) => {
+  const { club_id } = req.params;
   try {
     if (!club_id) {
       throw new MissingInformationError();

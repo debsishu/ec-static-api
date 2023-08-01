@@ -4,8 +4,8 @@ import User from "../../models/User";
 
 const getUserDetails: Router = express.Router();
 
-getUserDetails.get("/", async (req: Request, res: Response) => {
-  const { username } = req.query;
+getUserDetails.get("/users/:username", async (req: Request, res: Response) => {
+  const { username } = req.params;
   try {
     if (!username) {
       throw new MissingInformationError("Please provide username");
