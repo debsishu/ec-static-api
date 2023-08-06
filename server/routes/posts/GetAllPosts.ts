@@ -7,10 +7,14 @@ const getAllPosts: Router = express.Router();
 getAllPosts.get("/posts", async (req: Request, res: Response) => {
   const perPage: number = parseInt(req.query.perPage as string) || 10;
   const page: number = parseInt(req.query.page as string) || 1;
+  const criteria: string = (req.query.criteria as string) || "time";
   const skipAmount = (page - 1) * perPage;
 
   try {
     const posts = await Post.find()
+      .sort({
+        ...(criteria === "time" ? { timestamp: -1 } : { upvote_count: -1 }),
+      })
       .populate([
         {
           path: "user_id",

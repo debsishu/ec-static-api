@@ -7,7 +7,13 @@ import User from "../../models/User";
 const createClub: Router = express.Router();
 
 createClub.post("/clubs", verifyToken, async (req: Request, res: Response) => {
-  const { name, club_id, description } = req.body;
+  const {
+    name,
+    club_id,
+    description,
+    club_profile_picture,
+    club_banner_picture,
+  } = req.body;
   try {
     const userInfo = req.body.user_data;
 
@@ -19,6 +25,10 @@ createClub.post("/clubs", verifyToken, async (req: Request, res: Response) => {
       name: name,
       club_id: club_id,
       description: description,
+      ...(club_profile_picture && {
+        club_profile_picture: club_profile_picture,
+      }),
+      ...(club_banner_picture && { club_banner_picture: club_banner_picture }),
       members: [userInfo._id],
       member_count: 1,
       created_by: userInfo._id,

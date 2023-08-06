@@ -11,12 +11,16 @@ getUserPosts.get(
     const { user_id } = req.params;
     const perPage: number = parseInt(req.query.perPage as string) || 10;
     const page: number = parseInt(req.query.page as string) || 1;
+    const criteria: string = (req.query.criteria as string) || "time";
     const skipAmount = (page - 1) * perPage;
 
     try {
       if (!user_id) throw new MissingInformationError("No user id provided");
 
       const userPosts = await Post.find({ user_id })
+        .sort({
+          ...(criteria === "time" ? { timestamp: -1 } : { upvote_count: -1 }),
+        })
         .populate([
           {
             path: "user_id",

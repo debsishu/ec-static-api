@@ -1,7 +1,8 @@
 import express, { Request, Response, Router } from "express";
-import { MissingInformationError, ResponseError } from "../../types/Error";
-import Post from "../../models/Post";
+import moment from "moment";
 import { CastError } from "mongoose";
+import Post from "../../models/Post";
+import { MissingInformationError, ResponseError } from "../../types/Error";
 
 const getClubPosts: Router = express.Router();
 
@@ -11,6 +12,9 @@ getClubPosts.get(
     const { club_id } = req.params;
     const perPage: number = parseInt(req.query.perPage as string) || 10;
     const page: number = parseInt(req.query.page as string) || 1;
+    const criteria: string = (req.query.criteria as string) || "time";
+    const trendingDays: number =
+      parseInt(req.query.trendingDays as string) || 7;
     const skipAmount = (page - 1) * perPage;
 
     try {
@@ -18,7 +22,22 @@ getClubPosts.get(
         throw new MissingInformationError("No club id provided");
       }
 
-      const clubPosts = await Post.find({ club_id: club_id })
+      const currentDate = new Date();
+      const oneWeekAgo = moment(currentDate)
+        .subtract(trendingDays, "days")
+        .toDate();
+
+      const searchCriteria = {
+        club_id: club_id,
+        ...(criteria === "trending" && { timestamp: { $gte: oneWeekAgo } }),
+      };
+
+      const clubPosts = await Post.find(searchCriteria)
+        .sort({
+          ...(criteria === "trending" && { upvote_count: -1 }),
+          ...(criteria === "time" && { timestamp: -1 }),
+          ...(criteria === "vote" && { upvote_count: -1 }),
+        })
         .populate([
           {
             path: "user_id",
@@ -32,7 +51,7 @@ getClubPosts.get(
         .skip(skipAmount)
         .limit(perPage);
 
-      const totalCount = await Post.countDocuments();
+      const totalCount = await Post.countDocuments(searchCriteria);
 
       const paginationInfo = {
         page,

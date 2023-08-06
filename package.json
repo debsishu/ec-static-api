@@ -27,6 +27,7 @@
     "ioredis": "^5.3.2",
     "jsonwebtoken": "^8.5.1",
     "mailgun.js": "^9.2.0",
+    "moment": "^2.29.4",
     "mongodb": "^5.5.0",
     "mongoose": "^6.6.1",
     "password-validator": "^5.3.0",

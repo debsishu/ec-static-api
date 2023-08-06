@@ -13,6 +13,7 @@ getJoinedClubPosts.get(
     const userInfo = req.body.user_data;
     const perPage: number = parseInt(req.query.perPage as string) || 10;
     const page: number = parseInt(req.query.page as string) || 1;
+    const criteria: string = (req.query.criteria as string) || "time";
     const skipAmount = (page - 1) * perPage;
 
     try {
@@ -27,6 +28,9 @@ getJoinedClubPosts.get(
       const clubIds = user.clubs;
 
       const posts = await Post.find({ club_id: { $in: clubIds } })
+        .sort({
+          ...(criteria === "time" ? { timestamp: -1 } : { upvote_count: -1 }),
+        })
         .populate([
           {
             path: "user_id",
@@ -40,7 +44,9 @@ getJoinedClubPosts.get(
         .skip(skipAmount)
         .limit(perPage);
 
-      const totalCount = await Post.countDocuments();
+      const totalCount = await Post.countDocuments({
+        club_id: { $in: clubIds },
+      });
 
       const paginationInfo = {
         page,
